@@ -1,22 +1,10 @@
 # Information
-This repo is for my modifications to the original 'creddump' program available
+This is my GUI wrapper for the original 'creddump' program available
 at: 
 
 https://code.google.com/p/creddump/
 
-I did not write the original program. 
-
-I have combined many patches and fixes I have seen from different forums and
-user suggestions, as well as modified the usage to make it a little more clear.
-
-I followed patches and fixes from the following links:
-
-* https://code.google.com/p/creddump/issues/detail?id=4
-* https://code.google.com/p/volatility/issues/detail?id=92
-
-Enjoy!
-Ronnie Flathers (@ropnop)
-
+Credit to Ronnie Flathers (@ropnop) for the additional modifications.
 
 ### Usage
 Mount a Windows 7/Vista partition:

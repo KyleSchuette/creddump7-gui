@@ -1,9 +1,9 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 import tkinter as tk
-import ttk, Tkconstants, tkFileDialog
 from tkinter import *
-from tkinter import messagebox
+from tkinter import filedialog, constants, ttk
 import os
+import sys
 import subprocess
 
 ### Changelog
@@ -11,23 +11,24 @@ import subprocess
 ### Added global pop-up window output, option to disable output file creation
 # 1.3 - 2018-03-06
 ### Added recursive file searching functionality
+# 1.4 - 2022-08-29
+### Updated to Python 3
 
-version = '1.3'
+
+version = '1.4'
 global selection
 selection = ''
 global disable
 disable = False
 runcom = "***Running Command: "
 
-## Check if user is root
-user = subprocess.check_output('whoami').rstrip()
-if user != 'root':
-	print "Must be root!"
-	exit()
+# Ensure root permissions
+if not os.geteuid() == 0:
+	sys.exit("This script must be run as root!")
 
 def mountDir():
 	global dirName
-	dirName = tkFileDialog.askdirectory(initialdir=e1.get(),title="Select Mount Location")
+	dirName = filedialog.askdirectory(initialdir=e1.get(),title="Select Mount Location")
 	# Avoid Clearing Entry Box
 	if dirName:
 		e1.delete(0, END)
@@ -37,7 +38,7 @@ def mountDir():
 
 def outputFile():
 	global fileName	
-	fileName = tkFileDialog.asksaveasfilename(initialdir=e2.get(),title="Select Output File")
+	fileName = filedialog.asksaveasfilename(initialdir=e2.get(),title="Select Output File")
 	# Avoid Clearing Entry Box
 	if fileName:
 		e2.delete(0, END)
@@ -46,7 +47,7 @@ def outputFile():
 		return
 
 def printAbout():
-	messagebox.showinfo('About Creddump GUI', "Created by Kyle Schuette\nVersion %s" % version)
+	tk.messagebox.showinfo('About Creddump GUI', "Created by Kyle Schuette\nVersion %s" % version)
 
 def selector():
 	global selection
@@ -107,7 +108,7 @@ def go():
 			vista_win7 = 'false'
 		else:
 			return
-		print runcom + '"./cachedump.py %s %s %s"' % (system, security, vista_win7)
+		print(runcom + '"./cachedump.py %s %s %s"' % (system, security, vista_win7))
 		out = subprocess.check_output("./cachedump.py %s %s %s" % (system, security, vista_win7), shell=True)
 	## Lsadump
 	elif selection == 'Lsadump':
@@ -118,11 +119,11 @@ def go():
 			vista_win7 = 'false'
 		else:
 			return
-		print runcom + '"./lsadump.py %s %s %s"' % (system, security, vista_win7)
+		print(runcom + '"./lsadump.py %s %s %s"' % (system, security, vista_win7))
 		out = subprocess.check_output("./lsadump.py %s %s %s" % (system, security, vista_win7), shell=True)
 	## Pwdump
 	elif selection == 'Pwdump':
-		print runcom + '"./pwdump.py %s %s"' % (system, sam)
+		print(runcom + '"./pwdump.py %s %s"' % (system, sam))
 		out = subprocess.check_output("./pwdump.py %s %s" % (system, sam), shell=True)
 	## None Selected
 	else:
