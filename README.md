@@ -1,5 +1,6 @@
 # Creddump GUI
 ![GUI Image](images/gui-image.jpg)
+
 This is my GUI wrapper for the original 'creddump' program available
 at: 
 
